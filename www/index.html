@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Track Viewer</h1>
+    </header>
+    <main>
+        <div class="file-upload-container">
+            <label for="upload" class="file-upload-button">
+                📁 Choose GPX File
+            </label>
+            <input id="upload" type="file" accept=".gpx" class="file-upload-input">
+            <div id="file-info" class="file-info"></div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; Thomas Bollmeier 2025</p>
+    </footer>
+    <script src="gpx.js" type="module"></script>
+    <script src="app.js" type="module"></script>
+
+</body>
+
+</html>
