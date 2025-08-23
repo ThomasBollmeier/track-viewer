@@ -27,3 +27,7 @@
     font-style: italic;
     color: #666;
 }
+
+#map {
+    height: 180px;
+}

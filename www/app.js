@@ -1,4 +1,5 @@
 import { parseGPX } from "./gpx.js";
+import { createMapView } from "./map.js";
 
 // File upload handling
 document.addEventListener('DOMContentLoaded', function () {
@@ -38,6 +39,8 @@ function handleFileUpload(file) {
         // Here you can add your GPX processing logic
         let gpxData = parseGPX(gpxContent);
         console.log('Parsed GPX Data:', gpxData);
+
+        let map = createMapView();
 
         // Example: Show success message
         const fileInfo = document.getElementById('file-info');
