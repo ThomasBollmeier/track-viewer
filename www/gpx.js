@@ -69,6 +69,25 @@ class WayPoint {
         this.lon = lon;
         this.ele = ele;
     }
+
+    static getBorderCoordinates(waypoints) {
+        const lats = waypoints.map(wp => wp.lat);
+        const lons = waypoints.map(wp => wp.lon);
+        return {
+            north: Math.max(...lats),
+            south: Math.min(...lats),
+            east: Math.max(...lons),
+            west: Math.min(...lons)
+        };
+    }
+
+    static getCenter(waypoints) {
+        const { north, south, east, west } = WayPoint.getBorderCoordinates(waypoints);
+        return {
+            lat: (north + south) / 2,
+            lon: (east + west) / 2
+        };
+    }
 }
 
 class Route {
@@ -80,6 +99,14 @@ class Route {
     addWaypoint(waypoint) {
         this.waypoints.push(waypoint);
     }
+
+    getLatLngs() {
+        return this.waypoints.map(wp => [wp.lat, wp.lon]);
+    }
+
+    get center() {
+        return WayPoint.getCenter(this.waypoints);
+    }
 }
 
 class TrackSegment {
@@ -89,6 +116,14 @@ class TrackSegment {
 
     addWaypoint(waypoint) {
         this.waypoints.push(waypoint);
+    }
+
+    getLatLngs() {
+        return this.waypoints.map(wp => [wp.lat, wp.lon]);
+    }
+
+    get center() {
+        return WayPoint.getCenter(this.waypoints);
     }
 }
 
@@ -100,6 +135,10 @@ class Track {
 
     addSegment(segment) {
         this.segments.push(segment);
+    }
+
+    get center() {
+        return WayPoint.getCenter(this.segments.map(seg => seg.center));
     }
 }
 
@@ -122,6 +161,21 @@ class GPSData {
     addTrack(track) {
         this.tracks.push(track);
     }
+
+    get center() {
+        let centers = [];
+        if (this.waypoints.length > 0) {
+            centers.push(WayPoint.getCenter(this.waypoints));
+        }
+        if (this.routes.length > 0) {
+            centers.push(...this.routes.map(route => route.center));
+        }
+        if (this.tracks.length > 0) {
+            centers.push(...this.tracks.map(track => track.center));
+        }
+        return WayPoint.getCenter(centers);
+    }
+
 }
 
 export {

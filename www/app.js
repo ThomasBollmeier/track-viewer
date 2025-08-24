@@ -37,10 +37,10 @@ function handleFileUpload(file) {
         console.log('Content preview:', gpxContent.substring(0, 200) + '...');
 
         // Here you can add your GPX processing logic
-        let gpxData = parseGPX(gpxContent);
+        const gpxData = parseGPX(gpxContent);
         console.log('Parsed GPX Data:', gpxData);
 
-        let map = createMapView();
+        const map = createMapView(gpxData);
 
         // Example: Show success message
         const fileInfo = document.getElementById('file-info');
